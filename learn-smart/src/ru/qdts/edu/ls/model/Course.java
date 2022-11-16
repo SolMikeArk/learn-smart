@@ -13,6 +13,8 @@ public class Course implements Describable {
 	protected int duration;
 	protected String branch;
 	protected String[] tags = new String[10];
+	protected float rating = 2.5f; 
+	
 	public Course(int id, String title, int duration, String branch) {
 		super();
 		this.id = id;
@@ -32,7 +34,12 @@ public class Course implements Describable {
 	public String getBranch() {
 		return branch;
 	}
-	
+		public float getRating() {
+		return rating;
+	}
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
 	@Override
 	public String getDescription(Format format) {
 		String desc = "Описание недостпно", template;

@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class CourseCalalogImpl1 implements CourseCatalog {
@@ -12,19 +14,20 @@ public class CourseCalalogImpl1 implements CourseCatalog {
 	private static final String[] FILE_NAMES = {"javaProg.prop" , "jsProg.prop", "pythonProg.prop",
 		"cppProg.prop", "kotlinProg.prop"};
 	
-	private Course[] catalog = null;
+	private List<Course> catalog = null;
 	
 	public CourseCalalogImpl1() {}
 	
 	@Override
 	public int open() {
-		catalog = new Course[100];
+		catalog = new ArrayList<Course>();
 		
 		Path file;
 		int i =0;
 		for(String s : FILE_NAMES) {
 			file = Path.of(WORK_DIR, s);
-			catalog[i++] = load(file);
+			catalog.add(load(file));
+			i++;
 		}
 		
 		return i-1;
@@ -87,6 +90,11 @@ public class CourseCalalogImpl1 implements CourseCatalog {
 		return null;
 	}
 
-
+	@Override
+	public List<Course> getAll() throws CatalogNotOpenedException {
+		if(catalog == null)
+			throw new CatalogNotOpenedException();
+		return catalog;
+	}
 }
 
